@@ -1,12 +1,18 @@
 package org.frame;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -22,6 +28,8 @@ import org.openqa.selenium.edge.EdgeDriver;
 public class FrameTask {
 	static long start;
 	static WebDriver driver;
+	static String text;
+	static String text1;
 	@BeforeClass
 	public static void browserlaunch() {
 	
@@ -33,8 +41,10 @@ public class FrameTask {
 System.out.println("browserlaunch");
 	}
 	@AfterClass
-public static void browserquit() {
-		
+public static void browserquit() throws Throwable {
+
+		   Thread.sleep(2000);
+	driver.quit();	
 System.out.println("browserquit");
 	}
 	
@@ -79,12 +89,22 @@ public  void Startingtime() {
 		   element1.click();
 		   String text = element1.getText();
 		   System.out.println(text);
+		   
+		   File f = new File("C:\\\\Users\\\\nandhini\\\\eclipse-workspace\\\\Frametask\\\\src\\\\test\\\\resources\\\\mobileframe1.xlsx");
+			Workbook wb  =new XSSFWorkbook();
+			Sheet s = wb.createSheet("sheet1");
+			Row r = s.createRow(0);
+			Cell c = r.createCell(0);
+			c.setCellValue(text);
+			FileOutputStream f1 = new FileOutputStream(f);
+			wb.write(f1);
 		
 		System.out.println("mobiles");
 			}
 	@Test
 	public void method4() throws Throwable {
-
+		
+		
 		   Thread.sleep(2000);
 		   WebElement element1 = driver.findElement(By.xpath("(//div[@class='_4rR01T'])[1]"));
 		   element1.click();
@@ -105,7 +125,17 @@ public  void Startingtime() {
 			   driver.switchTo().window(x);
 			   System.out.println(x);
 		   }
-			
+		   WebElement element4 = driver.findElement(By.xpath("//span[@class='B_NuCI']"));
+			  String text1 = element4.getText();
+			   System.out.println(text1);
+			   File f = new File("C:\\Users\\nandhini\\eclipse-workspace\\Frametask\\src\\test\\resources\\mobileframe2.xlsx");
+				Workbook wb  =new XSSFWorkbook();
+				Sheet s = wb.createSheet("sheet1");
+				Row r = s.createRow(0);
+				Cell c = r.createCell(0);
+				c.setCellValue(text1);
+				FileOutputStream f1 = new FileOutputStream(f);
+				wb.write(f1);
 		
 		   }
 	@Test
@@ -115,5 +145,12 @@ public  void Startingtime() {
 	     File location = new File("C:\\Users\\nandhini\\eclipse-workspace\\Frametask\\target\\frames");
 	     FileUtils.copyFile(filetype, location);
 		System.out.println("screenshot");
-			}
+
+		//if (text.equals(text1)) {
+		//	System.out.println("true");
+			//}
+		//else {
+		//	System.out.println("false");
+		//}		
+	}
 }
